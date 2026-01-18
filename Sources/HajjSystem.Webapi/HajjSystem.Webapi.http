@@ -1,0 +1,6 @@
+@HajjSystem_Webapi_HostAddress = http://localhost:5116
+
+GET {{HajjSystem_Webapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
