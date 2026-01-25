@@ -1,4 +1,3 @@
-using HajjSystem.Models.Entities;
 using HajjSystem.Models.Models;
 using HajjSystem.Services.Interfaces;
 using AutoMapper;
@@ -20,11 +19,10 @@ public class VehicleContractController : ControllerBase
         _mapper = mapper;
     }
 
-    [Authorize]
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpPost("search")]
+    public async Task<IActionResult> SearchVehicleContracts([FromBody] VehicleContractSearchModel model)
     {
-        var items = await _service.GetAllAsync();
+        var items = await _service.SearchVehicleContractsAsync(model);
         var models = _mapper.Map<IEnumerable<VehicleContractModel>>(items);
         
         return Ok(new OperationResponse 
@@ -36,113 +34,34 @@ public class VehicleContractController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById(int id)
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
     {
-        var item = await _service.GetByIdAsync(id);
-        if (item is null)
-        {
-            return NotFound(new OperationResponse 
-            {
-                Status = false, 
-                Message = "VehicleContract not found" 
-            });
-        }
-        
-        var model = _mapper.Map<VehicleContractModel>(item);
-        
-        return Ok(new OperationResponse 
-        {   
-            Data = model,
-            Status = true, 
-            Message = "Get data successfully" 
-        });
-    }
-
-    [Authorize]
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] VehicleContractCreateModel model)
-    {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-        
-        // Validate date range
-        if (model.StartDate >= model.EndDate)
-        {
-            return BadRequest(new OperationResponse 
-            { 
-                Status = false, 
-                Message = "Start date must be before end date" 
-            });
-        }
-        
-        var vehicleContract = _mapper.Map<VehicleContract>(model);
-        
-        var created = await _service.CreateAsync(vehicleContract);
-        var createdModel = _mapper.Map<VehicleContractModel>(created);
-        
-        return Ok(new OperationResponse 
-        { 
-            Data = createdModel,
-            Status = true, 
-            Message = "VehicleContract created successfully" 
-        });
-    }
-
-    [Authorize]
-    [HttpPut]
-    public async Task<IActionResult> Update([FromBody] VehicleContractUpdateModel model)
-    {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-        
-        var exists = await _service.ExistsAsync(model.Id);
+        var exists = await _service.ExistsAsync(id);
         if (!exists)
         {
             return NotFound(new OperationResponse 
             { 
                 Status = false, 
-                Message = "Vehicle Contract not found" 
+                Message = "Vehicle contract not found" 
             });
         }
 
-        // Validate date range
-        if (model.StartDate >= model.EndDate)
-        {
-            return BadRequest(new OperationResponse 
-            { 
-                Status = false, 
-                Message = "Start date must be before end date" 
-            });
-        }
-
-        var vehicleContract = _mapper.Map<VehicleContract>(model);
-        var updated = await _service.UpdateAsync(vehicleContract);
-        
-        return Ok(new OperationResponse 
-        { 
-            Status = true, 
-            Message = "VehicleContract updated successfully" 
-        });
-    }
-
-    [Authorize]
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
-    {
         var deleted = await _service.DeleteAsync(id);
         
         if (!deleted)
         {
-            return NotFound(new OperationResponse 
+            return StatusCode(500, new OperationResponse 
             { 
                 Status = false, 
-                Message = "VehicleContract not found" 
+                Message = "Failed to delete vehicle contract" 
             });
         }
         
         return Ok(new OperationResponse 
         { 
             Status = true, 
-            Message = "VehicleContract deleted successfully" 
+            Message = "Vehicle contract deleted successfully" 
         });
     }
 }

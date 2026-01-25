@@ -8,4 +8,5 @@ public interface IUserService
     Task<OperationResponse> CreateCustomerAsync(CustomerUserCreationModel model);
     Task<OperationResponse> CreateCompanyUserAsync(CompanyUserCreationModel model);
     Task<LoginResponse?> LoginAsync(LoginModel model);
+    Task<IEnumerable<User>> SearchUsersAsync(UserSearchModel model);
 }

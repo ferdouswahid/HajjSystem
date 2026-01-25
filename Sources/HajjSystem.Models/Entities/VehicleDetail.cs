@@ -25,4 +25,6 @@ public class VehicleDetail : BaseEntity
     public int CompanyId { get; set; }
     [ForeignKey("CompanyId")]
     public Company? Company { get; set; }
+    
+    public ICollection<PackageVehicle>? PackageVehicles { get; set; }
 }

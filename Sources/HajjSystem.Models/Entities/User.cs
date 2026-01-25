@@ -41,4 +41,5 @@ public class User : BaseEntity
     [ForeignKey("SeasonId")]
     public Season? Season { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
+    public ICollection<Order>? Orders { get; set; }
 }

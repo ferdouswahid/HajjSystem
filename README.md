@@ -116,21 +116,12 @@ http://localhost:5116/swagger/index.html
 
 ## Docker Deployment
 
-## Standard deployment
-```bash
-docker compose -f db-compose.yml up -d
-
-cd Sources/HajjSystem.Webapi && dotnet build && dotnet run
-```
-
-
-
-### 2. compose deployment:
+### Standard deployment:
 ```bash
 docker-compose up -d
 ```
 
-### 3. Hot-reload development:
+### Hot-reload development:
 ```bash
 docker-compose -f docker-compose-hot-reload.yml up
 ```

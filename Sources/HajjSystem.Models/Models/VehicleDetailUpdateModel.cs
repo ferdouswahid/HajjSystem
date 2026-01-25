@@ -5,23 +5,27 @@ namespace HajjSystem.Models.Models;
 
 public class VehicleDetailUpdateModel
 {
-    [Required]
-    public int Id { get; set; }
+
+    public int? Id { get; set; }
     
-    [Required]
-    public int VehicleId { get; set; }
-    
+   public int? VehicleId { get; set; }
+
+    //public VehicleModel? Vehicle { get; set; }
+
+
     [Required]
     public int RouteFromId { get; set; }
+
+    //public VehicleRouteModel? RouteFrom { get; set; }
     
     [Required]
     public int RouteToId { get; set; }
+    public VehicleRouteModel? RouteTo { get; set; }
     
     [Required]
     public TripType TripType { get; set; }
     
     [Required]
-    [Range(0.01, double.MaxValue)]
     public decimal Price { get; set; }
     
     [Required]
@@ -31,4 +35,5 @@ public class VehicleDetailUpdateModel
     
     [Required]
     public int CompanyId { get; set; }
+    //public CompanyModel? Company { get; set; }
 }

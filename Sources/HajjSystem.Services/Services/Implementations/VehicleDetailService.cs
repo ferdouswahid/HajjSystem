@@ -1,5 +1,6 @@
 using HajjSystem.Data.Repositories.Interfaces;
 using HajjSystem.Models.Entities;
+using HajjSystem.Models.Models;
 using HajjSystem.Services.Interfaces;
 
 namespace HajjSystem.Services.Implementations;
@@ -42,25 +43,6 @@ public class VehicleDetailService : IVehicleDetailService
 
     public async Task<VehicleDetail> CreateAsync(VehicleDetail vehicleDetail)
     {
-        // Validate foreign keys exist
-        var vehicleExists = await _vehicleRepository.ExistsAsync(vehicleDetail.VehicleId);
-        if (!vehicleExists)
-        {
-            throw new ArgumentException($"Vehicle with ID {vehicleDetail.VehicleId} does not exist.");
-        }
-
-        var routeFromExists = await _vehicleRouteRepository.ExistsAsync(vehicleDetail.RouteFromId);
-        if (!routeFromExists)
-        {
-            throw new ArgumentException($"Route with ID {vehicleDetail.RouteFromId} does not exist.");
-        }
-
-        var routeToExists = await _vehicleRouteRepository.ExistsAsync(vehicleDetail.RouteToId);
-        if (!routeToExists)
-        {
-            throw new ArgumentException($"Route with ID {vehicleDetail.RouteToId} does not exist.");
-        }
-
         return await _repository.AddAsync(vehicleDetail);
     }
 
@@ -71,25 +53,6 @@ public class VehicleDetailService : IVehicleDetailService
         if (!exists)
         {
             throw new ArgumentException($"VehicleDetail with ID {vehicleDetail.Id} does not exist.");
-        }
-
-        // Validate foreign keys exist
-        var vehicleExists = await _vehicleRepository.ExistsAsync(vehicleDetail.VehicleId);
-        if (!vehicleExists)
-        {
-            throw new ArgumentException($"Vehicle with ID {vehicleDetail.VehicleId} does not exist.");
-        }
-
-        var routeFromExists = await _vehicleRouteRepository.ExistsAsync(vehicleDetail.RouteFromId);
-        if (!routeFromExists)
-        {
-            throw new ArgumentException($"Route with ID {vehicleDetail.RouteFromId} does not exist.");
-        }
-
-        var routeToExists = await _vehicleRouteRepository.ExistsAsync(vehicleDetail.RouteToId);
-        if (!routeToExists)
-        {
-            throw new ArgumentException($"Route with ID {vehicleDetail.RouteToId} does not exist.");
         }
 
         return await _repository.UpdateAsync(vehicleDetail);
@@ -105,8 +68,13 @@ public class VehicleDetailService : IVehicleDetailService
         return await _repository.ExistsAsync(id);
     }
 
-    public async Task saveListAsync(List<VehicleDetail> vehicleDetails)
+    public async Task SaveListAsync(List<VehicleDetail> vehicleDetails)
     {
         await _repository.AddRangeAsync(vehicleDetails);
+    }
+
+    public async Task<IEnumerable<VehicleDetail>> SearchVehicleDetailsAsync(VehicleDetailSearchModel model)
+    {
+        return await _repository.SearchVehicleDetailsAsync(model);
     }
 }

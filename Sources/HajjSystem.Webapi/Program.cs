@@ -127,6 +127,18 @@ builder.Services.AddScoped<IVehicleDetailRepository, VehicleDetailRepository>();
 builder.Services.AddScoped<IVehicleDetailService, VehicleDetailService>();
 builder.Services.AddScoped<IVehicleContractRepository, VehicleContractRepository>();
 builder.Services.AddScoped<IVehicleContractService, VehicleContractService>();
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
+builder.Services.AddScoped<IContractService, ContractService>();
+builder.Services.AddScoped<IPackageTypeRepository, PackageTypeRepository>();
+builder.Services.AddScoped<IPackageTypeService, PackageTypeService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+builder.Services.AddScoped<IPackageRepository, PackageRepository>();
+builder.Services.AddScoped<IPackageService, PackageService>();
+builder.Services.AddScoped<IPackageVehicleRepository, PackageVehicleRepository>();
+builder.Services.AddScoped<IPackageVehicleService, PackageVehicleService>();
 
 var app = builder.Build();
 

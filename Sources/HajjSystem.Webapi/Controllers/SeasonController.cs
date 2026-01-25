@@ -103,7 +103,7 @@ public class SeasonController : ControllerBase
         });
     }
 
-    [Authorize]
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] SeasonCreateModel model)
     {

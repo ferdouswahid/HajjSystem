@@ -78,16 +78,6 @@ public class VendorController : ControllerBase
             });
         }
         
-        // Check for duplicate CR Number
-        var exists = await _service.ExistsByCrNumberAsync(model.CrNumber);
-        if (exists)
-        {
-            return BadRequest(new OperationResponse 
-            { 
-                Status = false, 
-                Message = "A Vendor with this CR Number already exists" 
-            });
-        }
         
         var vendor = _mapper.Map<Models.Entities.Vendor>(model);
         
@@ -126,17 +116,6 @@ public class VendorController : ControllerBase
             { 
                 Status = false, 
                 Message = "Company not found" 
-            });
-        }
-
-        // Check for duplicate CR Number (excluding current record)
-        var crExists = await _service.ExistsByCrNumberAsync(model.CrNumber, model.Id);
-        if (crExists)
-        {
-            return BadRequest(new OperationResponse 
-            { 
-                Status = false, 
-                Message = "A Vendor with this CR Number already exists" 
             });
         }
 

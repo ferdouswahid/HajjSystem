@@ -11,4 +11,7 @@ public class AirlineRoute : BaseEntity
     public string? Continent { get; set; }
     public string? Type { get; set; }
     public string? Size { get; set; }
+    
+    public ICollection<AirlineContractDetail>? RouteFromDetails { get; set; }
+    public ICollection<AirlineContractDetail>? RouteToDetails { get; set; }
 }

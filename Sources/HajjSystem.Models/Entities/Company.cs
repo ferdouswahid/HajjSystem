@@ -26,6 +26,17 @@ public class Company : BaseEntity
     public ICollection<User> Users { get; set; }
     public ICollection<Vehicle> Vehicles { get; set; }
     public ICollection<VehicleDetail> VehicleDetails { get; set; }
+    public ICollection<VehicleContract> VehicleContracts { get; set; }
     public ICollection<Vendor> Vendors { get; set; }
     public ICollection<Contract> Contracts { get; set; }
+    public ICollection<AirlineContract> AirlineContracts { get; set; }
+    public ICollection<AirlineContractDetail> AirlineContractDetails { get; set; }
+    public ICollection<Package> Packages { get; set; }
+    public ICollection<PackageType> PackageTypes { get; set; }
+    public ICollection<PackageVehicle> PackageVehicles { get; set; }
+    public ICollection<PackageAirline> PackageAirlines { get; set; }
+    public ICollection<MealType> MealTypes { get; set; }
+    public ICollection<MealServiceLevel> MealServiceLevels { get; set; }
+    public ICollection<Order>? Orders { get; set; }
+    public ICollection<Order>? PilgrimOrders { get; set; }
 }

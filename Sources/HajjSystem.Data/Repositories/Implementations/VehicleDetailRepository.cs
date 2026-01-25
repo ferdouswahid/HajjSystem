@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using HajjSystem.Models.Entities;
+using HajjSystem.Models.Models;
 using HajjSystem.Data.Repositories.Interfaces;
 
 namespace HajjSystem.Data.Repositories.Implementations;
@@ -77,8 +78,62 @@ public class VehicleDetailRepository : IVehicleDetailRepository
         return true;
     }
 
+    public async Task<bool> DeleteByVehicleIdAsync(int vehicleId)
+    {
+        var entities = await _context.VehicleDetails
+            .Where(vd => vd.VehicleId == vehicleId)
+            .ToListAsync();
+        
+        if (!entities.Any()) return true; // No details to delete
+        
+        _context.VehicleDetails.RemoveRange(entities);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<bool> ExistsAsync(int id)
     {
         return await _context.VehicleDetails.AnyAsync(vd => vd.Id == id);
+    }
+
+    public async Task<IEnumerable<VehicleDetail>> SearchVehicleDetailsAsync(VehicleDetailSearchModel model)
+    {
+        var query = _context.VehicleDetails
+            .Include(vd => vd.Vehicle)
+            .Include(vd => vd.RouteFrom)
+            .Include(vd => vd.RouteTo)
+            .AsQueryable();
+
+        if (model.Id.HasValue)
+            query = query.Where(vd => vd.Id == model.Id.Value);
+
+        if (model.Ids != null && model.Ids.Any())
+            query = query.Where(vd => model.Ids.Contains(vd.Id));
+
+        if (model.VehicleId.HasValue)
+            query = query.Where(vd => vd.VehicleId == model.VehicleId.Value);
+
+        if (model.RouteFromId.HasValue)
+            query = query.Where(vd => vd.RouteFromId == model.RouteFromId.Value);
+
+        if (model.RouteToId.HasValue)
+            query = query.Where(vd => vd.RouteToId == model.RouteToId.Value);
+
+        if (model.TripType.HasValue)
+            query = query.Where(vd => vd.TripType == model.TripType.Value);
+
+        if (model.MinPrice.HasValue)
+            query = query.Where(vd => vd.Price >= model.MinPrice.Value);
+
+        if (model.MaxPrice.HasValue)
+            query = query.Where(vd => vd.Price <= model.MaxPrice.Value);
+
+        if (model.DepartureDate.HasValue)
+            query = query.Where(vd => vd.DepartureDate.Date == model.DepartureDate.Value.Date);
+
+        if (model.CompanyId.HasValue)
+            query = query.Where(vd => vd.CompanyId == model.CompanyId.Value);
+
+        return await query.AsNoTracking().ToListAsync();
     }
 }

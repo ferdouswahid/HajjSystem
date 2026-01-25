@@ -41,6 +41,23 @@ public class VehicleController : ControllerBase
         });
     }
 
+
+    [Authorize]
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchVehicles([FromQuery] VehicleSearchModel model)
+    {
+        var items = await _service.SearchVehiclesAsync(model);
+        var models = _mapper.Map<IEnumerable<VehicleModel>>(items);
+        
+        return Ok(new OperationResponse 
+        {   
+            Data = models.ToArray(),
+            Status = true, 
+            Message = "Get data successfully" 
+        });
+    }
+
+
     [Authorize]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetByIdWithDetailsAsync(int id)
@@ -71,75 +88,11 @@ public class VehicleController : ControllerBase
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         
+        //var userCompanyId = User.FindFirst("CompanyId")?.Value;
+
+
         // Validate CompanyId if provided
-        // if (model.CompanyId.HasValue)
-        // {
-        //     var companyExists = await _companyService.ExistsAsync(model.CompanyId.Value);
-        //     if (!companyExists)
-        //     {
-        //         return BadRequest(new OperationResponse 
-        //         { 
-        //             Status = false, 
-        //             Message = "Company not found" 
-        //         });
-        //     }
-        // }
-        
-        // Validate VendorId if provided
-        // if (model.VendorId.HasValue)
-        // {
-        //     var vendorExists = await _vendorService.ExistsAsync(model.VendorId.Value);
-        //     if (!vendorExists)
-        //     {
-        //         return BadRequest(new OperationResponse 
-        //         { 
-        //             Status = false, 
-        //             Message = "Vendor not found" 
-        //         });
-        //     }
-        // }
-        
-        var vehicle = _mapper.Map<Vehicle>(model);
-         
-
-
-
-        var created = await _service.CreateAsync(vehicle);
-
-
-        var vehicleDetails = _mapper.Map<List<VehicleDetail>>(model.VehicleDetails);
-        vehicleDetails.ForEach(vd => vd.Vehicle = created);
-        await _vehicleDetailService.saveListAsync(vehicleDetails);
-
-        
-        var createdModel = _mapper.Map<VehicleModel>(created);
-        
-        return Ok(new OperationResponse 
-        { 
-            Data = createdModel,
-            Status = true, 
-            Message = "Vehicle created successfully" 
-        });
-    }
-
-    [Authorize]
-    [HttpPut]
-    public async Task<IActionResult> Update([FromBody] VehicleUpdateModel model)
-    {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-        
-        var exists = await _service.ExistsAsync(model.Id);
-        if (!exists)
-        {
-            return NotFound(new OperationResponse 
-            { 
-                Status = false, 
-                Message = "Vehicle not found" 
-            });
-        }
-        
-        // Validate CompanyId if provided
-        if (model.CompanyId.HasValue)
+       /* if (model.CompanyId.HasValue)
         {
             var companyExists = await _companyService.ExistsAsync(model.CompanyId.Value);
             if (!companyExists)
@@ -150,10 +103,10 @@ public class VehicleController : ControllerBase
                     Message = "Company not found" 
                 });
             }
-        }
+        }*/
         
         // Validate VendorId if provided
-        if (model.VendorId.HasValue)
+  /*       if (model.VendorId.HasValue)
         {
             var vendorExists = await _vendorService.ExistsAsync(model.VendorId.Value);
             if (!vendorExists)
@@ -164,16 +117,50 @@ public class VehicleController : ControllerBase
                     Message = "Vendor not found" 
                 });
             }
-        }
-
-        var vehicle = _mapper.Map<Vehicle>(model);
-        var updated = await _service.UpdateAsync(vehicle);
+        } */
         
-        return Ok(new OperationResponse 
-        { 
-            Status = true, 
-            Message = "Vehicle updated successfully" 
-        });
+         
+
+        var result = await _service.CreateWithDetailsAsync(model);
+        return Ok(new { message = result });
+    }
+
+    [Authorize]
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] VehicleUpdateModel model)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        
+        // Validate CompanyId if provided
+        /* if (model.CompanyId.HasValue)
+        {
+            var companyExists = await _companyService.ExistsAsync(model.CompanyId.Value);
+            if (!companyExists)
+            {
+                return BadRequest(new OperationResponse 
+                { 
+                    Status = false, 
+                    Message = "Company not found" 
+                });
+            }
+        } */
+        
+        // Validate VendorId if provided
+       /*  if (model.VendorId.HasValue)
+        {
+            var vendorExists = await _vendorService.ExistsAsync(model.VendorId.Value);
+            if (!vendorExists)
+            {
+                return BadRequest(new OperationResponse 
+                { 
+                    Status = false, 
+                    Message = "Vendor not found" 
+                });
+            }
+        } */
+
+        var result = await _service.UpdateWithDetailsAsync(model);
+        return Ok(result);
     }
 
     [Authorize]

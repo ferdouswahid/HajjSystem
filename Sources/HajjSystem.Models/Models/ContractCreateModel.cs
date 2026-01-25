@@ -6,6 +6,9 @@ namespace HajjSystem.Models.Models;
 public class ContractCreateModel
 {
     [Required]
+    public string Title { get; set; } = string.Empty;
+    
+    [Required]
     public int VendorId { get; set; }
     
     [Required]
@@ -17,15 +20,15 @@ public class ContractCreateModel
     [Required]
     public DateOnly EndDate { get; set; }
     
-    [Required]
-    public string Status { get; set; } = string.Empty;
+    public string? Status { get; set; } = string.Empty;
     
-    [Required]
-    public string ServiceConditions { get; set; } = string.Empty;
+    public string? ServiceConditions { get; set; } = string.Empty;
     
     [Required]
     public int CompanyId { get; set; }
     
     [Required]
     public int SeasonId { get; set; }
+
+    public List<VehicleContractCreateModel>? VehicleContracts { get; set; }
 }

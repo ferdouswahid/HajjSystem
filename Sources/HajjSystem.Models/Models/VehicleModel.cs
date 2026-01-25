@@ -12,7 +12,7 @@ public class VehicleModel
     public string? Model { get; set; }
     public int Year { get; set; }
     [Required]
-    public string LicensePlate { get; set; }
+    public string LicensePlate { get; set; } = string.Empty;
     [Required]
     public VehicleType VehicleType { get; set; }
     [Required]

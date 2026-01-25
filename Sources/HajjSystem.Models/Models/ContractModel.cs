@@ -5,16 +5,23 @@ namespace HajjSystem.Models.Models;
 public class ContractModel
 {
     public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
     public int VendorId { get; set; }
     public ContractType ContractType { get; set; }
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
-    public string Status { get; set; } = string.Empty;
-    public string ServiceConditions { get; set; } = string.Empty;
+    public string? Status { get; set; } = string.Empty;
+    public string? ServiceConditions { get; set; } = string.Empty;
     public int CompanyId { get; set; }
     public int SeasonId { get; set; }
 
     public VendorModel? Vendor { get; set; }
     public CompanyModel? Company { get; set; }
     public SeasonModel? Season { get; set; }
+    
+    public DateTime CreatedDate { get; set; }
+    public DateTime? UpdatedDate { get; set; }
+    public bool IsEnabled { get; set; }
+
+    public List<VehicleContractModel>? VehicleContracts { get; set; }
 }

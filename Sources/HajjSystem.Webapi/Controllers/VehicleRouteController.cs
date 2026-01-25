@@ -12,11 +12,13 @@ namespace HajjSystem.Webapi.Controllers;
 public class VehicleRouteController : ControllerBase
 {
     private readonly IVehicleRouteService _service;
+    private readonly ICompanyService _companyService;
     private readonly IMapper _mapper;
 
-    public VehicleRouteController(IVehicleRouteService service, IMapper mapper)
+    public VehicleRouteController(IVehicleRouteService service, ICompanyService companyService, IMapper mapper)
     {
         _service = service;
+        _companyService = companyService;
         _mapper = mapper;
     }
 
@@ -65,6 +67,17 @@ public class VehicleRouteController : ControllerBase
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         
+        // Validate CompanyId
+        var companyExists = await _companyService.ExistsAsync(model.CompanyId);
+        if (!companyExists)
+        {
+            return BadRequest(new OperationResponse 
+            { 
+                Status = false, 
+                Message = "Company not found" 
+            });
+        }
+        
         // Check for duplicate name
         var exists = await _service.ExistsByNameAsync(model.Name);
         if (exists)
@@ -102,6 +115,17 @@ public class VehicleRouteController : ControllerBase
             { 
                 Status = false, 
                 Message = "VehicleRoute not found" 
+            });
+        }
+        
+        // Validate CompanyId
+        var companyExists = await _companyService.ExistsAsync(model.CompanyId);
+        if (!companyExists)
+        {
+            return BadRequest(new OperationResponse 
+            { 
+                Status = false, 
+                Message = "Company not found" 
             });
         }
 

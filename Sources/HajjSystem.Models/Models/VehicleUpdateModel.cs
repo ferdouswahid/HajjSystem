@@ -19,7 +19,7 @@ public class VehicleUpdateModel
     public int Year { get; set; }
     
     [Required]
-    public string LicensePlate { get; set; }
+    public string LicensePlate { get; set; } = string.Empty;
     
     [Required]
     public VehicleType VehicleType { get; set; }
@@ -32,9 +32,9 @@ public class VehicleUpdateModel
     
     public string? Status { get; set; }
     
-    public int? CompanyId { get; set; }
+    public int CompanyId { get; set; }
     
-    public int? VendorId { get; set; }
+    public int VendorId { get; set; }
     
     public List<VehicleDetailUpdateModel>? VehicleDetails { get; set; }
 }

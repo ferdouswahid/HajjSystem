@@ -9,6 +9,9 @@ public class ContractUpdateModel
     public int Id { get; set; }
     
     [Required]
+    public string Title { get; set; } = string.Empty;
+    
+    [Required]
     public int VendorId { get; set; }
     
     [Required]
@@ -20,15 +23,16 @@ public class ContractUpdateModel
     [Required]
     public DateOnly EndDate { get; set; }
     
-    [Required]
-    public string Status { get; set; } = string.Empty;
+    public string? Status { get; set; } = string.Empty;
     
-    [Required]
-    public string ServiceConditions { get; set; } = string.Empty;
+
+    public string? ServiceConditions { get; set; } = string.Empty;
     
     [Required]
     public int CompanyId { get; set; }
     
     [Required]
     public int SeasonId { get; set; }
+
+    public List<VehicleContractUpdateModel>? VehicleContracts { get; set; }
 }

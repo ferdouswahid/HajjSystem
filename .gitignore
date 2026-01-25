@@ -366,3 +366,4 @@ db_data/
 .vs_code_extensions/
 .vs
 #.devcontainer/
+Sources/HajjSystem.Data/Migrations/

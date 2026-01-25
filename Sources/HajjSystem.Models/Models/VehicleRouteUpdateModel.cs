@@ -11,4 +11,7 @@ public class VehicleRouteUpdateModel
     public string Name { get; set; }
     
     public string? Details { get; set; }
+    
+    [Required]
+    public int CompanyId { get; set; }
 }

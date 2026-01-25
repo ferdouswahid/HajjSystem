@@ -22,6 +22,141 @@ namespace HajjSystem.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HajjSystem.Models.Entities.AirlineContract", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ContractId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Seat")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("VendorId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("SeasonId");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("AirlineContracts");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.AirlineContractDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AirlineContractId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ArrivalDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DepartureDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FlightNoArriaval")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FlightNoDeparture")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("NoOfSeat")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("ReservedSeat")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RouteFromId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RouteToId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TripType")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AirlineContractId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("RouteFromId");
+
+                    b.HasIndex("RouteToId");
+
+                    b.ToTable("AirlineContractDetails");
+                });
+
             modelBuilder.Entity("HajjSystem.Models.Entities.AirlineRoute", b =>
                 {
                     b.Property<int>("Id")
@@ -217,6 +352,11 @@ namespace HajjSystem.Data.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("UpdatedBy")
@@ -236,7 +376,7 @@ namespace HajjSystem.Data.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Contracts");
+                    b.ToTable("Contracts", (string)null);
                 });
 
             modelBuilder.Entity("HajjSystem.Models.Entities.Location", b =>
@@ -281,13 +421,16 @@ namespace HajjSystem.Data.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("HajjSystem.Models.Entities.MealType", b =>
+            modelBuilder.Entity("HajjSystem.Models.Entities.MealServiceLevel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
@@ -319,10 +462,524 @@ namespace HajjSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("MealServiceLevels");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.MealType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("Name", "CompanyId")
                         .IsUnique();
 
                     b.ToTable("MealTypes");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("InvoiceNo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MobileNo")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Paid")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("PilgrimCompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("TotalNetAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("PilgrimCompanyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MobileNo")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("NetPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PackageId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PassportNo")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.OrderLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderLogs");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Package", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("NetPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("NoOfPilgrim")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PackageTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("TotalNoOfNight")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("PackageTypeId");
+
+                    b.HasIndex("SeasonId");
+
+                    b.ToTable("Packages");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.PackageAirline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AirlineContractDetailId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("AirlineContractId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("PackageId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AirlineContractDetailId");
+
+                    b.HasIndex("AirlineContractId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("PackageId");
+
+                    b.HasIndex("SeasonId");
+
+                    b.ToTable("PackageAirlines");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.PackageType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("PackageTypes");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.PackageVehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool?>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("PackageId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("VehicleContractId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("VehicleDetailId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("PackageId");
+
+                    b.HasIndex("SeasonId");
+
+                    b.HasIndex("VehicleContractId");
+
+                    b.HasIndex("VehicleDetailId");
+
+                    b.ToTable("PackageVehicles");
                 });
 
             modelBuilder.Entity("HajjSystem.Models.Entities.Registration", b =>
@@ -654,6 +1311,12 @@ namespace HajjSystem.Data.Migrations
                     b.Property<int>("AgreedSeat")
                         .HasColumnType("integer");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
@@ -666,25 +1329,8 @@ namespace HajjSystem.Data.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<bool?>("IsEnabled")
                         .HasColumnType("boolean");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("ServiceConditions")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("integer");
@@ -696,6 +1342,10 @@ namespace HajjSystem.Data.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ContractId");
 
                     b.HasIndex("VehicleId");
 
@@ -776,6 +1426,9 @@ namespace HajjSystem.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
@@ -805,6 +1458,8 @@ namespace HajjSystem.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -897,24 +1552,92 @@ namespace HajjSystem.Data.Migrations
                     b.ToTable("Vendors");
                 });
 
-            modelBuilder.Entity("HajjSystem.Models.Entities.Contract", b =>
+            modelBuilder.Entity("HajjSystem.Models.Entities.AirlineContract", b =>
                 {
                     b.HasOne("HajjSystem.Models.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("AirlineContracts")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HajjSystem.Models.Entities.Season", "Season")
+                    b.HasOne("HajjSystem.Models.Entities.Contract", "Contract")
                         .WithMany()
+                        .HasForeignKey("ContractId");
+
+                    b.HasOne("HajjSystem.Models.Entities.Season", "Season")
+                        .WithMany("AirlineContracts")
                         .HasForeignKey("SeasonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HajjSystem.Models.Entities.Vendor", "Vendor")
-                        .WithMany()
+                        .WithMany("AirlineContracts")
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Season");
+
+                    b.Navigation("Vendor");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.AirlineContractDetail", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.AirlineContract", "AirlineContract")
+                        .WithMany("AirlineContractDetails")
+                        .HasForeignKey("AirlineContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("AirlineContractDetails")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.AirlineRoute", "RouteFrom")
+                        .WithMany("RouteFromDetails")
+                        .HasForeignKey("RouteFromId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.AirlineRoute", "RouteTo")
+                        .WithMany("RouteToDetails")
+                        .HasForeignKey("RouteToId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AirlineContract");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("RouteFrom");
+
+                    b.Navigation("RouteTo");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Contract", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("Contracts")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Season", "Season")
+                        .WithMany("Contracts")
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Vendor", "Vendor")
+                        .WithMany("Contracts")
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -922,6 +1645,219 @@ namespace HajjSystem.Data.Migrations
                     b.Navigation("Season");
 
                     b.Navigation("Vendor");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.MealServiceLevel", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("MealServiceLevels")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.MealType", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("MealTypes")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Order", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("Orders")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Company", "PilgrimCompany")
+                        .WithMany("PilgrimOrders")
+                        .HasForeignKey("PilgrimCompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("PilgrimCompany");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.OrderDetail", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Package", "Package")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.OrderLog", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Order", "Order")
+                        .WithMany("OrderLogs")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Package", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("Packages")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.PackageType", "PackageType")
+                        .WithMany("Packages")
+                        .HasForeignKey("PackageTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Season", "Season")
+                        .WithMany("Packages")
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("PackageType");
+
+                    b.Navigation("Season");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.PackageAirline", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.AirlineContractDetail", "AirlineContractDetail")
+                        .WithMany("PackageAirlines")
+                        .HasForeignKey("AirlineContractDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.AirlineContract", null)
+                        .WithMany("PackageAirlines")
+                        .HasForeignKey("AirlineContractId");
+
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("PackageAirlines")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Contract", "Contract")
+                        .WithMany("PackageAirlines")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Package", "Package")
+                        .WithMany("PackageAirlines")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Season", "Season")
+                        .WithMany("PackageAirlines")
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AirlineContractDetail");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Package");
+
+                    b.Navigation("Season");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.PackageType", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("PackageTypes")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.PackageVehicle", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("PackageVehicles")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Contract", "Contract")
+                        .WithMany("PackageVehicles")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Package", "Package")
+                        .WithMany("PackageVehicles")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Season", "Season")
+                        .WithMany("PackageVehicles")
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.VehicleContract", "VehicleContract")
+                        .WithMany()
+                        .HasForeignKey("VehicleContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.VehicleDetail", "VehicleDetail")
+                        .WithMany("PackageVehicles")
+                        .HasForeignKey("VehicleDetailId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Package");
+
+                    b.Navigation("Season");
+
+                    b.Navigation("VehicleContract");
+
+                    b.Navigation("VehicleDetail");
                 });
 
             modelBuilder.Entity("HajjSystem.Models.Entities.User", b =>
@@ -977,11 +1913,27 @@ namespace HajjSystem.Data.Migrations
 
             modelBuilder.Entity("HajjSystem.Models.Entities.VehicleContract", b =>
                 {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("VehicleContracts")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HajjSystem.Models.Entities.Contract", "Contract")
+                        .WithMany("VehicleContracts")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HajjSystem.Models.Entities.Vehicle", "Vehicle")
                         .WithMany("VehicleContracts")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Contract");
 
                     b.Navigation("Vehicle");
                 });
@@ -989,7 +1941,7 @@ namespace HajjSystem.Data.Migrations
             modelBuilder.Entity("HajjSystem.Models.Entities.VehicleDetail", b =>
                 {
                     b.HasOne("HajjSystem.Models.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("VehicleDetails")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1021,7 +1973,7 @@ namespace HajjSystem.Data.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("HajjSystem.Models.Entities.Vendor", b =>
+            modelBuilder.Entity("HajjSystem.Models.Entities.VehicleRoute", b =>
                 {
                     b.HasOne("HajjSystem.Models.Entities.Company", "Company")
                         .WithMany()
@@ -1032,11 +1984,99 @@ namespace HajjSystem.Data.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("HajjSystem.Models.Entities.Vendor", b =>
+                {
+                    b.HasOne("HajjSystem.Models.Entities.Company", "Company")
+                        .WithMany("Vendors")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.AirlineContract", b =>
+                {
+                    b.Navigation("AirlineContractDetails");
+
+                    b.Navigation("PackageAirlines");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.AirlineContractDetail", b =>
+                {
+                    b.Navigation("PackageAirlines");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.AirlineRoute", b =>
+                {
+                    b.Navigation("RouteFromDetails");
+
+                    b.Navigation("RouteToDetails");
+                });
+
             modelBuilder.Entity("HajjSystem.Models.Entities.Company", b =>
                 {
+                    b.Navigation("AirlineContractDetails");
+
+                    b.Navigation("AirlineContracts");
+
+                    b.Navigation("Contracts");
+
+                    b.Navigation("MealServiceLevels");
+
+                    b.Navigation("MealTypes");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("PackageAirlines");
+
+                    b.Navigation("PackageTypes");
+
+                    b.Navigation("PackageVehicles");
+
+                    b.Navigation("Packages");
+
+                    b.Navigation("PilgrimOrders");
+
                     b.Navigation("Users");
 
+                    b.Navigation("VehicleContracts");
+
+                    b.Navigation("VehicleDetails");
+
                     b.Navigation("Vehicles");
+
+                    b.Navigation("Vendors");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Contract", b =>
+                {
+                    b.Navigation("PackageAirlines");
+
+                    b.Navigation("PackageVehicles");
+
+                    b.Navigation("VehicleContracts");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+
+                    b.Navigation("OrderLogs");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.Package", b =>
+                {
+                    b.Navigation("OrderDetails");
+
+                    b.Navigation("PackageAirlines");
+
+                    b.Navigation("PackageVehicles");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.PackageType", b =>
+                {
+                    b.Navigation("Packages");
                 });
 
             modelBuilder.Entity("HajjSystem.Models.Entities.Role", b =>
@@ -1046,11 +2086,23 @@ namespace HajjSystem.Data.Migrations
 
             modelBuilder.Entity("HajjSystem.Models.Entities.Season", b =>
                 {
+                    b.Navigation("AirlineContracts");
+
+                    b.Navigation("Contracts");
+
+                    b.Navigation("PackageAirlines");
+
+                    b.Navigation("PackageVehicles");
+
+                    b.Navigation("Packages");
+
                     b.Navigation("Users");
                 });
 
             modelBuilder.Entity("HajjSystem.Models.Entities.User", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("UserRoles");
                 });
 
@@ -1059,6 +2111,11 @@ namespace HajjSystem.Data.Migrations
                     b.Navigation("VehicleContracts");
 
                     b.Navigation("VehicleDetails");
+                });
+
+            modelBuilder.Entity("HajjSystem.Models.Entities.VehicleDetail", b =>
+                {
+                    b.Navigation("PackageVehicles");
                 });
 
             modelBuilder.Entity("HajjSystem.Models.Entities.VehicleRoute", b =>
@@ -1070,6 +2127,10 @@ namespace HajjSystem.Data.Migrations
 
             modelBuilder.Entity("HajjSystem.Models.Entities.Vendor", b =>
                 {
+                    b.Navigation("AirlineContracts");
+
+                    b.Navigation("Contracts");
+
                     b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618

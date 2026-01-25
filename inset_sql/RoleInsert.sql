@@ -8,3 +8,4 @@ INSERT INTO "Roles" ("Name", "IsActive") VALUES
 
 -- View all roles
 SELECT "Id", "Name", "IsActive" FROM "Roles";
+

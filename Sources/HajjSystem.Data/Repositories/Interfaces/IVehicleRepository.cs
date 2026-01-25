@@ -1,4 +1,5 @@
 using HajjSystem.Models.Entities;
+using HajjSystem.Models.Models;
 
 namespace HajjSystem.Data.Repositories.Interfaces;
 
@@ -11,4 +12,5 @@ public interface IVehicleRepository
     Task<Vehicle> UpdateAsync(Vehicle vehicle);
     Task<bool> DeleteAsync(int id);
     Task<bool> ExistsAsync(int id);
+    Task<IEnumerable<Vehicle>> SearchVehiclesAsync(VehicleSearchModel model);
 }

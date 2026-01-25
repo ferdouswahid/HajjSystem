@@ -6,6 +6,8 @@ public class MealTypeCreateModel
 {
     [Required]
     public string Name { get; set; }
-    
     public string? Detail { get; set; }
+    [Required]
+    public int CompanyId { get; set; }
+    public CompanyModel? Company { get; set; }
 }

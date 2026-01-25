@@ -161,4 +161,9 @@ public class UserService : IUserService
             Roles = roleNames!
         };
     }
+
+    public async Task<IEnumerable<User>> SearchUsersAsync(UserSearchModel model)
+    {
+        return await _repository.SearchUsersAsync(model);
+    }
 }

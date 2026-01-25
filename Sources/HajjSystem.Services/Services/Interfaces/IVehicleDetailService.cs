@@ -1,4 +1,5 @@
 using HajjSystem.Models.Entities;
+using HajjSystem.Models.Models;
 
 namespace HajjSystem.Services.Interfaces;
 
@@ -12,5 +13,6 @@ public interface IVehicleDetailService
     Task<VehicleDetail> UpdateAsync(VehicleDetail vehicleDetail);
     Task<bool> DeleteAsync(int id);
     Task<bool> ExistsAsync(int id);
-    Task saveListAsync(List<VehicleDetail> vehicleDetails);
+    Task SaveListAsync(List<VehicleDetail> vehicleDetails);
+    Task<IEnumerable<VehicleDetail>> SearchVehicleDetailsAsync(VehicleDetailSearchModel model);
 }

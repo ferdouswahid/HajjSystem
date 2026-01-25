@@ -31,4 +31,5 @@ public class Vendor : BaseEntity
     
     public ICollection<Vehicle>? Vehicles { get; set; }
     public ICollection<Contract>? Contracts { get; set; }
+    public ICollection<AirlineContract>? AirlineContracts { get; set; }
 }
